@@ -1,0 +1,19 @@
+[user]
+        email = 1324596506@qq.com
+        name = Rekord
+[color]
+        ui = auto
+[core]
+        editor = vim
+        autocrlf = input
+        eol = lf
+        safecrlf = false
+        whitespace = trailing-space,space-before-tab,-cr-at-eol
+[credential]
+        helper = store
+[tag]
+        sort = version:refname
+[https]
+	proxy = https://127.0.0.1:7890
+[http]
+	proxy = http://127.0.0.1:7890
