@@ -1,0 +1,15 @@
+Host *
+        # 保持 TCP 连接活跃
+        TCPKeepAlive=yes
+        # 每隔 15 秒发送一次保持活动消息
+        ServerAliveInterval=15
+        # 最多尝试发送 6 次保持活动消息
+        ServerAliveCountMax=6
+        # 启用数据压缩
+        Compression=yes
+        # 启用控制主机模式，允许多个会话共享连接
+        ControlMaster auto
+        # 控制套接字路径，用于共享连接
+        ControlPath /tmp/%r@%h:%p
+        # 在退出会话后保持控制连接的持久性
+        ControlPersist yes
