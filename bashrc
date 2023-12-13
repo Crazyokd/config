@@ -15,3 +15,7 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 # After each command, append to the history file and reread it
 #export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
+# set up a bat -> batcat symlink
+mkdir -p ~/.local/bin
+ln -s /usr/bin/batcat ~/.local/bin/bat >/dev/null 2>&1
