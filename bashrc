@@ -19,3 +19,5 @@ shopt -s histappend
 # set up a bat -> batcat symlink
 mkdir -p ~/.local/bin
 ln -s /usr/bin/batcat ~/.local/bin/bat >/dev/null 2>&1
+
+alias gdb="gdb -q"
