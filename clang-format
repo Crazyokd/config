@@ -1,0 +1,7 @@
+# Run manually to reformat a file:
+# clang-format -i --style=file <file>
+Language:        Cpp
+BasedOnStyle:  Google
+IndentWidth: 4
+IndentCaseLabels: false # Do not indent switch-case
+AllowShortIfStatementsOnASingleLine: true
