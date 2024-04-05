@@ -19,3 +19,21 @@
 	proxy = http://127.0.0.1:7890
 [init]
         defaultBranch = main
+# difftastic related
+[diff]
+        tool = difftastic
+
+[difftool]
+        prompt = false
+
+[difftool "difftastic"]
+        cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+        difftool = true
+# `git dft` is less to type than `git difftool`.
+[alias]
+        dft = difftool
+# `git dlog` to show `git log -p` with difftastic.
+[alias]
+        dlog = "!f() { : git log ; GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
