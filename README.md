@@ -7,6 +7,9 @@ ripgrep
 nodejs npm nrm
 
 rustup
+difftastic
+cdecl
+jampack
 
 # todo
 take the vimrc as submodule
