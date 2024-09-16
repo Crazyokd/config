@@ -38,7 +38,7 @@ BinPackParameters: true
 BitFieldColonSpacing: Both
 BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterClass: false
+  AfterClass: true
   AfterStruct: false
   AfterEnum: false
   AfterControlStatement: false
@@ -47,6 +47,7 @@ BraceWrapping:
   AfterExternBlock: false
   BeforeCatch: false
   BeforeElse: false
+  BeforeLambdaBody: false
   BeforeWhile: false
   IndentBraces: false
   SplitEmptyFunction: false
@@ -59,19 +60,21 @@ DisableFormat: false
 EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: LogicalBlock
 FixNamespaceComments: true
+IfMacros: [IF]
 IndentAccessModifiers: false
 IndentCaseBlocks: false
 IndentCaseLabels: false # Do not indent switch-case
 IndentExternBlock: AfterExternBlock
 IndentGotoLabels: true
-IndentPPDirectives: None
+IndentPPDirectives: BeforeHash
 InsertTrailingCommas: None
 # KeepEmptyLinesAtEOF: true # require v17
 KeepEmptyLinesAtTheStartOfBlocks: false
+LambdaBodyIndentation: OuterScope
 # LineEnding: LF # require v16
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-PPIndentWidth: -1
+PPIndentWidth: 2
 PointerAlignment: Right
 QualifierAlignment: Leave
 ReferenceAlignment: Pointer
