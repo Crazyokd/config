@@ -1,40 +1,68 @@
 [user]
-        email = 1324596506@qq.com
-        name = Rekord
+    email = 1324596506@qq.com
+    name = Rekord
 [color]
-        ui = auto
+    ui = auto
 [core]
-        editor = vim
-	pager = delta
-        autocrlf = input
-        eol = lf
-        safecrlf = false
-        whitespace = trailing-space,space-before-tab,-cr-at-eol
+    editor = vim
+    autocrlf = input
+    eol = lf
+    safecrlf = false
+    whitespace = trailing-space,space-before-tab,-cr-at-eol
+	excludesfile = ~/.gitignore
 [credential]
-        helper = store
+    helper = store
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
 [tag]
-        sort = version:refname
+    sort = version:refname
 [https]
 	proxy = http://127.0.0.1:7890
 [http]
 	proxy = http://127.0.0.1:7890
 [init]
-        defaultBranch = main
-# difftastic related
+	defaultBranch = main
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
 [diff]
-        tool = difftastic
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+#   tool = difftastic
 
 [difftool]
-        prompt = false
+#   prompt = false
 
 [difftool "difftastic"]
-        cmd = difft "$LOCAL" "$REMOTE"
+#   cmd = difft "$LOCAL" "$REMOTE"
 
 [pager]
-        difftool = true
+#   difftool = true
+
 # `git dft` is less to type than `git difftool`.
 [alias]
-        dft = difftool
+    dft = difftool
 # `git dlog` to show `git log -p` with difftastic.
 [alias]
-        dlog = "!f() { : git log ; GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
+    dlog = "!f() { : git log ; GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
+# Why the hell not?
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
