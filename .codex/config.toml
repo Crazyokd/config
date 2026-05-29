@@ -1,3 +1,19 @@
+# Controls when Codex asks before running commands.
+# Values: "untrusted" (ask for most commands), "on-request" (agent decides), "never" (no prompts).
+approval_policy = "on-request"
+
+# Controls command sandboxing.
+# Values: "read-only", "workspace-write", "danger-full-access".
+sandbox_mode = "workspace-write"
+
 # Controls Codex live web search availability.
 # Values: "disabled" (off), "cached" (cached results only), "live" (live web search).
 web_search = "live"
+
+[sandbox_workspace_write]
+# Allows network access for commands run inside the workspace-write sandbox.
+network_access = true
+
+[features]
+# Enables Codex long-term memory extraction and consolidation.
+memories = true

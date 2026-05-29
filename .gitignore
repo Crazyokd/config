@@ -9,6 +9,7 @@
 .codex/shell_snapshots/
 .codex/memories/
 .codex/prompts/
+.codex/skills/.system/
 .codex/*.sqlite
 .codex/*.sqlite-shm
 .codex/*.sqlite-wal
