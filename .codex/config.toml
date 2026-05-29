@@ -1,0 +1,3 @@
+# Controls Codex live web search availability.
+# Values: "disabled" (off), "cached" (cached results only), "live" (live web search).
+web_search = "live"
