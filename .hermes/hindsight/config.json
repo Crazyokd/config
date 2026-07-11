@@ -1,0 +1,23 @@
+{
+  "api_url": "http://127.0.0.1:8888",
+  "auto_recall": true,
+  "auto_retain": true,
+  "bank_id": "hermes-unified",
+  "bank_id_template": "hermes-unified",
+  "bank_mission": "Unified long-term memory for this user across Claude Code, Codex, and Hermes. Preserve durable preferences, project conventions, reusable workflows, and evidence-backed observations.",
+  "bank_retain_mission": "Extract durable, reusable memories only: user preferences, stable project/repo conventions, recurring workflows, decisions, lessons learned, and cross-session context. Avoid transient task progress, one-off logs, raw command output noise, secrets, and stale artifact IDs.",
+  "memory_mode": "hybrid",
+  "mode": "local_external",
+  "recall_budget": "mid",
+  "recall_prefetch_method": "recall",
+  "recall_types": "observation,world,experience",
+  "retain_async": true,
+  "retain_context": "conversation or imported external-agent transcript relevant to the user's work",
+  "retain_every_n_turns": 1,
+  "retain_source": "hermes",
+  "retain_tags": [
+    "hermes",
+    "unified-memory"
+  ],
+  "timeout": 120
+}

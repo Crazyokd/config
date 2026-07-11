@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
+HERMES_ENV="$HERMES_HOME/.env"
+POSTGRES_ENV="$HERMES_HOME/hindsight/postgres.env"
+HERMES_VENV="$HERMES_HOME/hermes-agent/venv"
+LOG_DIR="$HERMES_HOME/logs"
+mkdir -p "$LOG_DIR" "$HOME/.hindsight-docker" "$HOME/.hindsight"
+
+if [[ -f "$HERMES_ENV" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  source "$HERMES_ENV"
+  set +a
+fi
+if [[ -f "$POSTGRES_ENV" ]]; then
+  set -a
+  # shellcheck disable=SC1090
+  source "$POSTGRES_ENV"
+  set +a
+fi
+
+: "${OPENAI_API_KEY:?OPENAI_API_KEY must be set in $HERMES_ENV for Hindsight LLM calls}"
+: "${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in $POSTGRES_ENV}"
+
+export HINDSIGHT_API_HOST="127.0.0.1"
+export HINDSIGHT_API_PORT="8888"
+export HINDSIGHT_API_DATABASE_URL="postgresql://hindsight:${POSTGRES_PASSWORD}@127.0.0.1:5433/hindsight"
+: "${HINDSIGHT_API_LLM_PROVIDER:=openai}"
+: "${HINDSIGHT_API_LLM_MODEL:=gpt-5.5}"
+: "${HINDSIGHT_API_LLM_BASE_URL:=http://dev.ai.sr/v1}"
+export HINDSIGHT_API_LLM_PROVIDER
+export HINDSIGHT_API_LLM_API_KEY="$OPENAI_API_KEY"
+export HINDSIGHT_API_LLM_MODEL
+export HINDSIGHT_API_LLM_BASE_URL
+# gpt-5.x style endpoints may reject explicit non-default temperatures.
+export HINDSIGHT_API_LLM_TEMPERATURE="none"
+export HINDSIGHT_API_LLM_TEMPERATURE_VERIFICATION="none"
+export HINDSIGHT_API_LLM_TEMPERATURE_RETAIN="none"
+export HINDSIGHT_API_LLM_TEMPERATURE_REFLECT="none"
+export HINDSIGHT_API_LLM_TEMPERATURE_CONSOLIDATION="none"
+# Avoid torch/sentence-transformers local ML dependencies.
+: "${HINDSIGHT_API_EMBEDDINGS_PROVIDER:=onnx}"
+: "${HINDSIGHT_ONNX_MODEL_ROOT:=$HOME/.cache/huggingface/hub/models--intfloat--multilingual-e5-small/snapshots/614241f622f53c4eeff9890bdc4f31cfecc418b3}"
+export HINDSIGHT_API_EMBEDDINGS_PROVIDER
+export HINDSIGHT_API_EMBEDDINGS_ONNX_MODEL_PATH="$HINDSIGHT_ONNX_MODEL_ROOT/onnx/model.onnx"
+export HINDSIGHT_API_EMBEDDINGS_ONNX_TOKENIZER_NAME_OR_PATH="$HINDSIGHT_ONNX_MODEL_ROOT"
+export HINDSIGHT_API_EMBEDDINGS_ONNX_DIMENSIONS="384"
+export HF_HUB_OFFLINE="1"
+export TRANSFORMERS_OFFLINE="1"
+export HINDSIGHT_API_RERANKER_PROVIDER="rrf"
+export HINDSIGHT_API_LLM_MAX_CONCURRENT="1"
+export HINDSIGHT_API_RETAIN_LLM_MAX_CONCURRENT="1"
+export HINDSIGHT_API_CONSOLIDATION_LLM_MAX_CONCURRENT="1"
+export HINDSIGHT_API_RETAIN_MAX_CONCURRENT="1"
+export HINDSIGHT_API_ENABLE_AUTO_CONSOLIDATION="true"
+export HINDSIGHT_API_WORKER_MAX_SLOTS="1"
+export HINDSIGHT_API_WORKER_RETAIN_MAX_SLOTS="0"
+export HINDSIGHT_API_WORKER_CONSOLIDATION_MAX_SLOTS="0"
+export HINDSIGHT_API_WORKER_TASK_RETRY_BACKOFF_SECONDS="300"
+export HINDSIGHT_API_LOG_LEVEL="info"
+
+exec "$HERMES_VENV/bin/hindsight-api" --host "$HINDSIGHT_API_HOST" --port "$HINDSIGHT_API_PORT" --no-access-log

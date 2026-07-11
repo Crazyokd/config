@@ -1,0 +1,17 @@
+[Unit]
+Description=Hindsight API for Hermes unified memory
+After=default.target
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/bash -lc 'for i in $(seq 1 60); do timeout 1 bash -c "</dev/tcp/127.0.0.1/5433" >/dev/null 2>&1 && exit 0; sleep 1; done; echo "hindsight postgres not reachable on 127.0.0.1:5433" >&2; exit 1'
+ExecStart=%h/.hermes/scripts/start_hindsight_api.sh
+Restart=always
+RestartSec=5
+WorkingDirectory=%h/.hermes
+Environment=HERMES_HOME=%h/.hermes
+StandardOutput=append:%h/.hermes/logs/hindsight-api.log
+StandardError=append:%h/.hermes/logs/hindsight-api.log
+
+[Install]
+WantedBy=default.target

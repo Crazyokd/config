@@ -1,0 +1,101 @@
+model:
+  default: gpt-5.5
+  provider: codex-openai
+  base_url: http://dev.ai.sr/v1
+  key_env: OPENAI_API_KEY
+  api_mode: codex_responses
+  openai_runtime: codex_app_server
+
+providers:
+  codex-openai:
+    name: Codex OpenAI endpoint
+    base_url: http://dev.ai.sr/v1
+    key_env: OPENAI_API_KEY
+    default_model: gpt-5.5
+    model: gpt-5.5
+    transport: codex_responses
+    api_mode: codex_responses
+    stale_timeout_seconds: 1200
+  claude-dev-ai-sr:
+    name: Claude Code dev.ai.sr endpoint
+    base_url: http://dev.ai.sr
+    key_env: ANTHROPIC_TOKEN
+    default_model: claude-opus-4-6
+    model: claude-opus-4-6
+    transport: anthropic_messages
+    api_mode: anthropic_messages
+
+fallback_providers:
+  - provider: claude-dev-ai-sr
+    model: claude-opus-4-6
+    base_url: http://dev.ai.sr
+    key_env: ANTHROPIC_TOKEN
+    api_mode: anthropic_messages
+
+toolsets:
+  - hermes-cli
+
+agent:
+  max_turns: 150
+  gateway_timeout: 1800
+  reasoning_effort: xhigh
+
+terminal:
+  backend: local
+  cwd: /home/standard/workspace
+  timeout: 180
+  auto_source_bashrc: true
+  persistent_shell: true
+
+compression:
+  enabled: true
+  threshold: 0.5
+  target_ratio: 0.2
+  protect_last_n: 20
+  abort_on_summary_failure: false
+
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  write_approval: false
+  provider: hindsight
+
+delegation:
+  model: gpt-5.5
+  provider: codex-openai
+  api_mode: codex_app_server
+  inherit_mcp_toolsets: true
+  max_iterations: 50
+  child_timeout_seconds: 600
+  max_concurrent_children: 3
+  max_spawn_depth: 1
+  orchestrator_enabled: true
+  subagent_auto_approve: true
+
+security:
+  redact_secrets: true
+
+cron:
+  wrap_response: true
+  script_timeout_seconds: 2700
+
+mcp_servers:
+  codegraph:
+    command: codegraph
+    args: [serve, --mcp]
+    timeout: 120
+    connect_timeout: 60
+    enabled: true
+  codex:
+    command: codex
+    args: [mcp-server]
+    timeout: 120
+    connect_timeout: 60
+    enabled: true
+
+plugins:
+  enabled:
+    - ponytail
+  disabled: []
+
+_config_version: 29

@@ -1,19 +1,106 @@
-# Controls when Codex asks before running commands.
-# Values: "untrusted" (ask for most commands), "on-request" (agent decides), "never" (no prompts).
+# https://developers.openai.com/codex/config-basic
 approval_policy = "on-request"
-
-# Controls command sandboxing.
-# Values: "read-only", "workspace-write", "danger-full-access".
 sandbox_mode = "workspace-write"
+web_search = "cached"
 
-# Controls Codex live web search availability.
-# Values: "disabled" (off), "cached" (cached results only), "live" (live web search).
-web_search = "live"
+model_provider = "OpenAI"
+model = "gpt-5.6-sol"
+review_model = "gpt-5.5"
+model_reasoning_effort = "ultra"
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
+service_tier = "default"
 
 [sandbox_workspace_write]
-# Allows network access for commands run inside the workspace-write sandbox.
 network_access = true
 
+[mcp_servers.codegraph]
+command = "codegraph"
+args = ["serve", "--mcp"]
+startup_timeout_sec = 60.0
+tool_timeout_sec = 120.0
+
+[mcp_servers.hindsight]
+command = "bash"
+args = ["/home/standard/.codex/plugins/cache/hindsight/hindsight-memory/0.7.4/scripts/run_mcp.sh"]
+
+[mcp_servers.hindsight.env]
+CLAUDE_PLUGIN_DATA = "/home/standard/.codex/plugins/data/hindsight-memory"
+CLAUDE_PLUGIN_ROOT = "/home/standard/.codex/plugins/cache/hindsight/hindsight-memory/0.7.4"
+HINDSIGHT_AGENT_NAME = "codex"
+HINDSIGHT_API_URL = "http://127.0.0.1:8888"
+HINDSIGHT_BANK_ID = "hermes-unified"
+HINDSIGHT_REQUEST_TIMEOUT_SECONDS = "120"
+
+[mcp_servers.hermes-tools]
+command = "/home/standard/.hermes/hermes-agent/venv/bin/python3"
+args = ["-m", "agent.transports.hermes_tools_mcp_server"]
+enabled = false
+startup_timeout_sec = 30.0
+tool_timeout_sec = 600.0
+
+[mcp_servers.hermes-tools.env]
+HERMES_HOME = "/home/standard/.hermes"
+HERMES_QUIET = "1"
+HERMES_REDACT_SECRETS = "true"
+
+[plugins."open-code-review@open-code-review"]
+enabled = true
+
+[plugins."understand-anything@understand-anything"]
+enabled = false
+
+[plugins."hindsight-memory@hindsight"]
+enabled = false
+
+[plugins."ponytail@ponytail"]
+enabled = true
+
+[plugins."superpowers@openai-api-curated"]
+enabled = true
+
+[[hooks.UserPromptSubmit]]
+[[hooks.UserPromptSubmit.hooks]]
+type = "command"
+command = "/home/standard/.codex/hooks/hindsight_codex.py recall"
+timeout = 12
+statusMessage = "Recalling Hindsight memories"
+
+[[hooks.Stop]]
+[[hooks.Stop.hooks]]
+type = "command"
+command = "/home/standard/.codex/hooks/hindsight_codex.py retain"
+timeout = 30
+statusMessage = "Retaining Hindsight memory"
+
+[model_providers.OpenAI]
+name = "OpenAI"
+base_url = "http://dev.ai.sr"
+wire_api = "responses"
+requires_openai_auth = true
+
 [features]
-# Enables Codex long-term memory extraction and consolidation.
+fast_mode = true
+multi_agent = true
+personality = true
+shell_snapshot = true
+shell_tool = true
 memories = true
+terminal_resize_reflow = true
+prevent_idle_sleep = true
+
+[marketplaces.understand-anything]
+source_type = "git"
+source = "https://github.com/Egonex-AI/Understand-Anything.git"
+
+[marketplaces.open-code-review]
+source_type = "git"
+source = "https://github.com/alibaba/open-code-review.git"
+
+[marketplaces.hindsight]
+source_type = "git"
+source = "https://github.com/vectorize-io/hindsight.git"
+
+[marketplaces.ponytail]
+source_type = "git"
+source = "https://github.com/DietrichGebert/ponytail.git"

@@ -1,0 +1,27 @@
+{
+  "hindsightApiUrl": "http://127.0.0.1:8888",
+  "bankId": "hermes-unified",
+  "agentName": "claude-code",
+  "bankMission": "Unified long-term memory for this user across Claude Code, Codex, and Hermes. Preserve durable preferences, project conventions, reusable workflows, and evidence-backed observations.",
+  "retainMission": "Extract durable, reusable memories only: user preferences, stable project/repo conventions, recurring workflows, decisions, lessons learned, and cross-session context. Avoid transient task progress, one-off logs, raw command output noise, secrets, and stale artifact IDs.",
+  "autoRecall": true,
+  "autoRetain": true,
+  "retainMode": "full-session",
+  "retainEveryNTurns": 1,
+  "retainContext": "claude-code",
+  "retainTags": [
+    "claude-code",
+    "unified-memory",
+    "{session_id}"
+  ],
+  "recallBudget": "mid",
+  "recallMaxTokens": 1024,
+  "recallTypes": [
+    "observation",
+    "world",
+    "experience"
+  ],
+  "requestTimeoutSeconds": 120,
+  "dynamicBankId": false,
+  "enableKnowledgeTools": true
+}
