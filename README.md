@@ -96,3 +96,35 @@ hermes config check
 ```
 
 The tracked pre-commit hook strictly validates `.codex/config.toml` when that file is staged.
+
+## OpenCode
+
+The `ai` branch tracks reusable OpenCode configuration:
+
+- `.opencode/opencode.json` — general skeleton: codegraph MCP server and permissions (credential-free);
+- `.opencode/agents/` — generic reusable subagents (e.g. `git-commit-pusher`);
+- `.opencode/commands/` — custom commands;
+- `.opencode/plugins/` — plugins such as the Hindsight memory recall/retain hooks;
+- `.opencode/install.sh` — symlink installer.
+
+Credentials and machine-specific paths are intentionally not tracked. The global `opencode.json` (from this repo) and the local `opencode.jsonc` are deep-merged at startup, with `opencode.jsonc` taking precedence on conflicting keys.
+
+Install once per machine:
+
+```bash
+bash .opencode/install.sh
+```
+
+The installer symlinks the tracked skeleton into `~/.config/opencode/` (creating `opencode.json`, `agents/`, `commands/`, `plugins/` only if absent) and generates a local `opencode.jsonc` template with detected Hindsight/Hermes paths. Fill in your provider API keys there:
+
+```bash
+$EDITOR ~/.config/opencode/opencode.jsonc
+```
+
+Then restart OpenCode and verify with:
+
+```bash
+opencode debug config
+```
+
+Local overrides live in `~/.config/opencode/opencode.jsonc` (not tracked), so the repo skeleton stays credential-free.

@@ -56,3 +56,10 @@
 
 .hindsight/*
 !.hindsight/claude-code.json
+
+.opencode/*
+!.opencode/opencode.json
+!.opencode/agents/
+!.opencode/commands/
+!.opencode/plugins/
+!.opencode/install.sh
