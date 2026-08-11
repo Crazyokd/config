@@ -1,0 +1,47 @@
+{
+  "$comment": "MCP servers 公共规范（单一真源）。本文件是三套 agent（codex / claude / opencode）MCP 配置的唯一真源。修改后运行 ./generate.mjs 重新生成各 agent 配置片段。不要把明文密钥写进本文件，需要凭据的用 {env:VAR} 占位。{home} 由生成器替换为 $HOME。",
+  "servers": {
+    "codegraph": {
+      "command": "codegraph",
+      "args": ["serve", "--mcp"],
+      "enabled": true,
+      "env": {},
+      "note": "Local code knowledge graph for AI coding agents."
+    },
+    "hindsight": {
+      "command": "bash",
+      "args": ["{home}/.codex/plugins/cache/hindsight/hindsight-memory/0.7.4/scripts/run_mcp.sh"],
+      "enabled": true,
+      "env": {
+        "CLAUDE_PLUGIN_DATA": "{home}/.codex/plugins/data/hindsight-memory",
+        "CLAUDE_PLUGIN_ROOT": "{home}/.codex/plugins/cache/hindsight/hindsight-memory/0.7.4",
+        "HINDSIGHT_AGENT_NAME": "{env:HINDSIGHT_AGENT_NAME}",
+        "HINDSIGHT_API_URL": "{env:HINDSIGHT_API_URL}",
+        "HINDSIGHT_BANK_ID": "{env:HINDSIGHT_BANK_ID}",
+        "HINDSIGHT_REQUEST_TIMEOUT_SECONDS": "120"
+      },
+      "note": "Hindsight memory daemon MCP (requires local server on 127.0.0.1:8888)."
+    },
+    "hermes-tools": {
+      "command": "{home}/.hermes/hermes-agent/venv/bin/python3",
+      "args": ["-m", "agent.transports.hermes_tools_mcp_server"],
+      "enabled": false,
+      "env": {
+        "HERMES_HOME": "{home}/.hermes",
+        "HERMES_QUIET": "1",
+        "HERMES_REDACT_SECRETS": "true"
+      },
+      "note": "Hermes agent tool bridge. Disabled by default."
+    },
+    "GitLab": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "TOKEN=$(glab config get token --host git.standard-robots.com); export GITLAB_PERSONAL_ACCESS_TOKEN=\"$TOKEN\"; export GITLAB_API_URL=\"http://git.standard-robots.com/api/v4\"; export GITLAB_PERMISSION_MODE=\"modify\"; export GITLAB_TOOLSETS=\"merge_requests,branches,users\"; export GITLAB_DISABLE_VERSION_CHECK=\"true\"; exec npx -y @zereight/mcp-gitlab@2.1.38"
+      ],
+      "enabled": true,
+      "env": {},
+      "note": "GitLab MCP via @zereight/mcp-gitlab. Token from glab config."
+    }
+  }
+}
