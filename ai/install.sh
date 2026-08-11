@@ -5,7 +5,8 @@
 #   1. 软链 ai/skills/ 下自有 skill 到三套 agent 的 skills 目录
 #   2. 运行 MCP 生成器，把公共 MCP 片段合并进各 agent 配置
 #   3. 软链 ai/opencode/ 骨架到 ~/.config/opencode/
-#   4. 生成本机 opencode.jsonc（凭据覆盖，gitignored；已存在则跳过）
+#   4. 软链 codex/claude 专属配置（CLAUDE.md / hooks / rules / AGENTS.md）
+#   5. 生成本机 opencode.jsonc（凭据覆盖，gitignored；已存在则跳过）
 #
 # 第三方 skill/plugin 见 install-thirdparty.sh。
 set -euo pipefail
@@ -17,8 +18,7 @@ OPENCODE_DEST="${XDG_CONFIG_HOME:-$HOME/.config}/opencode"
 echo "==> ai/ 真源: ${AI_DIR}"
 echo "==> opencode 目标: ${OPENCODE_DEST}"
 
-# ---------- 1. 软链自有 skill 到三套目录 ----------
-link_skill() {
+link() {
   local src="$1" dst="$2"
   if [ -e "$dst" ] || [ -L "$dst" ]; then
     echo "    [skip] ${dst} 已存在"
@@ -29,14 +29,15 @@ link_skill() {
   fi
 }
 
+# ---------- 1. 软链自有 skill 到三套目录 ----------
 echo "==> 软链自有 skill 到三套 agent"
 if [ -d "${AI_DIR}/skills" ]; then
   for skill_dir in "${AI_DIR}"/skills/*/; do
     [ -d "$skill_dir" ] || continue
     skill_name="$(basename "$skill_dir")"
-    link_skill "$skill_dir" "${HOME}/.agents/skills/${skill_name}"
-    link_skill "$skill_dir" "${HOME}/.codex/skills/${skill_name}"
-    link_skill "$skill_dir" "${HOME}/.claude/skills/${skill_name}"
+    link "$skill_dir" "${HOME}/.agents/skills/${skill_name}"
+    link "$skill_dir" "${HOME}/.codex/skills/${skill_name}"
+    link "$skill_dir" "${HOME}/.claude/skills/${skill_name}"
   done
 fi
 
@@ -55,16 +56,6 @@ fi
 
 # ---------- 3. opencode 骨架软链 ----------
 mkdir -p "${OPENCODE_DEST}"
-link() {
-  local src="$1" dst="$2"
-  if [ -e "$dst" ] || [ -L "$dst" ]; then
-    echo "    [skip] ${dst} 已存在"
-  else
-    mkdir -p "$(dirname "$dst")"
-    ln -s "$src" "$dst"
-    echo "    [link] ${dst} -> ${src}"
-  fi
-}
 
 echo "==> opencode 骨架软链"
 link "${AI_DIR}/opencode/opencode.json" "${OPENCODE_DEST}/opencode.json"
@@ -72,7 +63,18 @@ link "${AI_DIR}/opencode/agents"        "${OPENCODE_DEST}/agents"
 link "${AI_DIR}/opencode/commands"      "${OPENCODE_DEST}/commands"
 link "${AI_DIR}/plugins"                "${OPENCODE_DEST}/plugins"
 
-# ---------- 4. 本机 opencode.jsonc 凭据 + MCP 合并模板 ----------
+# ---------- 4. codex / claude 专属配置软链 ----------
+echo "==> codex 专属配置软链"
+link "${AI_DIR}/codex/hooks"       "${HOME}/.codex/hooks"
+link "${AI_DIR}/codex/rules"       "${HOME}/.codex/rules"
+link "${AI_DIR}/codex/AGENTS.md"   "${HOME}/.codex/AGENTS.md"
+echo "    == codex config.toml 含本机运行时字段（hooks.state/trusted_hash），"
+echo "       不自动软链；请手动 merge ai/codex/config.toml 到 ~/.codex/config.toml =="
+
+echo "==> claude 专属配置软链"
+link "${AI_DIR}/claude/CLAUDE.md"  "${HOME}/.claude/CLAUDE.md"
+
+# ---------- 5. 本机 opencode.jsonc 凭据 + MCP 合并模板 ----------
 JSONC="${OPENCODE_DEST}/opencode.jsonc"
 MCP_JSON="${AI_DIR}/mcp/out/opencode-mcp.json"
 if [ -f "$JSONC" ]; then
@@ -125,4 +127,5 @@ fi
 
 echo "==> 完成。重启各 agent 使配置生效。"
 echo "==> opencode 校验: opencode debug config"
+echo "==> codex 校验: codex --strict-config"
 echo "==> 第三方 skill/plugin: bash ai/install-thirdparty.sh"
