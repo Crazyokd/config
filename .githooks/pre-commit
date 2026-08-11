@@ -1,19 +1,19 @@
 #!/bin/sh
 set -eu
 
-if ! git diff --cached --name-only --diff-filter=ACMRT | grep -qx '.codex/config.toml'; then
+if ! git diff --cached --name-only --diff-filter=ACMRT | grep -qx 'ai/codex/config.toml'; then
   exit 0
 fi
 
 if ! command -v codex >/dev/null 2>&1; then
-  echo "pre-commit: codex not found; cannot validate .codex/config.toml" >&2
+  echo "pre-commit: codex not found; cannot validate ai/codex/config.toml" >&2
   exit 1
 fi
 
 tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT HUP INT TERM
 
-git show ':.codex/config.toml' >"$tmpdir/config.toml"
+git show ':ai/codex/config.toml' >"$tmpdir/config.toml"
 
 output=$(
   CODEX_HOME="$tmpdir" codex --strict-config exec \
@@ -33,7 +33,7 @@ case "$output" in
     exit 1
     ;;
   *"Failed to read output schema file"*)
-    echo "pre-commit: .codex/config.toml strict validation passed"
+    echo "pre-commit: ai/codex/config.toml strict validation passed"
     exit 0
     ;;
   *)

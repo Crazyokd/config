@@ -4,17 +4,7 @@ Personal configuration files.
 
 The repo stores configuration that is useful to review and reuse across machines.
 
-## Claude
-
-### CLAUDE.md
-
-Tracks `.claude/CLAUDE.md` for reusable Claude Code coding guidelines.
-
-`.codex/AGENTS.md` is a symlink to `.claude/CLAUDE.md`, so Codex uses the same file.
-
-`.claude/skills` is a symlink to `.codex/skills`, so Claude reuses Codex skills.
-
-Source: https://github.com/multica-ai/andrej-karpathy-skills
+The `ai/` directory is the single source of truth for all three code agents (codex / claude / opencode). See [ai/README.md](ai/README.md).
 
 ## CodeGraph
 
@@ -47,7 +37,7 @@ Enable the tracked pre-commit hook once per clone:
 git config core.hooksPath .githooks
 ```
 
-Before each commit, the hook runs `codex --strict-config` when the commit includes `.codex/config.toml`.
+Before each commit, the hook runs `codex --strict-config` when the commit includes `ai/codex/config.toml`.
 
 ### OpenSpec Prompts
 
@@ -95,7 +85,7 @@ Validate the local configuration with:
 hermes config check
 ```
 
-The tracked pre-commit hook strictly validates `.codex/config.toml` when that file is staged.
+The tracked pre-commit hook strictly validates `ai/codex/config.toml` when that file is staged.
 
 ## AI Shared Config
 

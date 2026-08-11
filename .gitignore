@@ -1,3 +1,4 @@
+# codex/claude 运行时文件（本机 ~/.codex ~/.claude 才有，仓库 ai/ 只存真源）
 .codex/auth.json
 .codex/auth.json.*
 .codex/history.jsonl
@@ -22,6 +23,10 @@
 .codex/goals_*.sqlite*
 .codex/logs_*.sqlite*
 .codex/hooks/__pycache__/
+
+# ai/codex 与 ai/claude 下的运行时/缓存（如未来出现）
+ai/codex/__pycache__/
+ai/codex/hooks/__pycache__/
 
 .claude/*
 !.claude/CLAUDE.md
