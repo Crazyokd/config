@@ -57,9 +57,5 @@
 .hindsight/*
 !.hindsight/claude-code.json
 
-.opencode/*
-!.opencode/opencode.json
-!.opencode/agents/
-!.opencode/commands/
-!.opencode/plugins/
-!.opencode/install.sh
+# MCP 生成器产物（由 ai/mcp/generate.mjs 重新生成，不手工维护）
+ai/mcp/out/

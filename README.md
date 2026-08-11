@@ -97,34 +97,36 @@ hermes config check
 
 The tracked pre-commit hook strictly validates `.codex/config.toml` when that file is staged.
 
-## OpenCode
+## AI Shared Config
 
-The `ai` branch tracks reusable OpenCode configuration:
+The `ai/` directory is the single source of truth for configuration shared across the three code agents (codex / claude / opencode), so you don't have to maintain a copy per agent.
 
-- `.opencode/opencode.json` — general skeleton: codegraph MCP server and permissions (credential-free);
-- `.opencode/agents/` — generic reusable subagents (e.g. `git-commit-pusher`);
-- `.opencode/commands/` — custom commands;
-- `.opencode/plugins/` — plugins such as the Hindsight memory recall/retain hooks;
-- `.opencode/install.sh` — symlink installer.
+- `ai/skills/` — first-party skills, symlinked into all three agents' skill directories;
+- `ai/mcp/` — MCP servers common spec (`mcp-servers.json`) plus a generator (`generate.mjs`) that produces codex / claude / opencode config fragments;
+- `ai/plugins/` — cross-agent plugins (e.g. the Hindsight recall/retain hooks);
+- `ai/opencode/` — opencode-specific skeleton (`opencode.json`, `agents/`, `commands/`);
+- `ai/install.sh` — one-shot installer;
+- `ai/install-thirdparty.sh` — third-party skill/plugin install notes (installed from upstream, not vendored).
 
-Credentials and machine-specific paths are intentionally not tracked. The global `opencode.json` (from this repo) and the local `opencode.jsonc` are deep-merged at startup, with `opencode.jsonc` taking precedence on conflicting keys.
+Credentials and machine-specific paths are intentionally not tracked. `mcp-servers.json` uses `{home}` (resolved to `$HOME` at generation) and `{env:VAR}` placeholders (expanded by opencode). OpenCode credentials live in the local `~/.config/opencode/opencode.jsonc` (gitignored), which takes precedence over the repo's `opencode.json` on conflicting keys.
 
 Install once per machine:
 
 ```bash
-bash .opencode/install.sh
+bash ai/install.sh
+bash ai/install-thirdparty.sh   # optional third-party skills
 ```
 
-The installer symlinks the tracked skeleton into `~/.config/opencode/` (creating `opencode.json`, `agents/`, `commands/`, `plugins/` only if absent) and generates a local `opencode.jsonc` template with detected Hindsight/Hermes paths. Fill in your provider API keys there:
+Then fill in your provider API keys:
 
 ```bash
 $EDITOR ~/.config/opencode/opencode.jsonc
 ```
 
-Then restart OpenCode and verify with:
+Restart the agents and verify with:
 
 ```bash
 opencode debug config
 ```
 
-Local overrides live in `~/.config/opencode/opencode.jsonc` (not tracked), so the repo skeleton stays credential-free.
+See [`ai/README.md`](ai/README.md) for the full layout and modification workflow.
