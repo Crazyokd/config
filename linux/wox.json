@@ -1,0 +1,17 @@
+{
+  "wox_settings": {
+    "MainHotkey@linux": "ctrl+ctrl",
+    "ActionPanelHotkey@linux": "ctrl+j",
+    "EnableAutostart@linux": "true",
+    "HideOnStart": "true",
+    "LangCode": "zh_CN",
+    "ThemeId": "92dc0ea7-a52f-4b0a-9f0d-7cb36a634860"
+  },
+  "plugin_settings": {
+    "979d6363-025a-4f51-88d3-0b04e9dc56bf": {
+      "roots@linux": "[{\"Path\":\"~\"}]",
+      "contentRoots@linux": "[{\"Path\":\"~\"}]",
+      "skipHiddenFiles": "false"
+    }
+  }
+}

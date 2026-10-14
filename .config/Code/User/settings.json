@@ -1,0 +1,143 @@
+{
+  "editor.accessibilitySupport": "off",
+  "editor.fontSize": 16,
+  "editor.formatOnSave": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.inlineSuggest.suppressSuggestions": true,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "window.commandCenter": false,
+  "mesonbuild.downloadLanguageServer": false,
+  "mesonbuild.configureOnOpen": false,
+  "workbench.layoutControl.enabled": false,
+  "workbench.startupEditor": "none",
+  "git.ignoreMissingGitWarning": true,
+  "diffEditor.renderIndicators": true,
+  "files.eol": "\n",
+  "debug.onTaskErrors": "abort",
+  "[cpp]": {
+    "editor.wordBasedSuggestions": "off",
+    "editor.suggest.insertMode": "replace",
+    "editor.semanticHighlighting.enabled": true,
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "files.associations": {
+    "*.cpp": "cpp"
+  },
+  "codeium.enableConfig": {
+    "*": true,
+    "meson": true,
+    "assembly": true,
+    "markdown": true
+  },
+  "codeium.enableCodeLens": false,
+  "settingsSync.ignoredExtensions": [
+    "codeium.codeium",
+    "ms-vscode-remote.remote-wsl",
+    "mathworks.language-matlab"
+  ],
+  "codeium.aggressiveShutdown": true,
+  "mesonbuild.buildFolder": "build",
+  "plantuml.exportSubFolder": false,
+  "mesonbuild.languageServer": null,
+  "mesonbuild.linting.enabled": false,
+  "codeium.enableSearch": true,
+  "redhat.telemetry.enabled": false,
+  "C_Cpp.formatting": "clangFormat",
+  "C_Cpp.default.cppStandard": "c++17",
+  "doxdocgen.file.fileOrder": [
+    "file",
+    "author",
+    "date",
+    "empty",
+    "brief"
+  ],
+  "doxdocgen.generic.dateFormat": "YYYY-MM-DD HH:mm",
+  "doxdocgen.generic.returnTemplate": "@return ",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "settingsSync.ignoredSettings": [
+    "remote.SSH.remotePlatform"
+  ],
+  "[c]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "yaml.maxItemsComputed": 10000,
+  "editor.minimap.enabled": false,
+  "[xml]": {
+    "editor.defaultFormatter": "DotJoshJohnson.xml"
+  },
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "Lingma.cloudModelAutoTriggerGenerateLength": "medium",
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, bun.lock",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  },
+  "Lingma.PreferredLanguage for AI Chat": "简体中文",
+  "Lingma.PreferredLanguage forCommitMessage": "English",
+  "terminal.integrated.commandsToSkipShell": [
+    "matlab.interrupt"
+  ],
+  "terminal.integrated.gpuAcceleration": "off",
+  "terminal.integrated.suggest.enabled": false,
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "workbench.secondarySideBar.defaultVisibility": "visible",
+  "chatgpt.openOnStartup": true,
+  "workbench.editorLargeFileConfirmation": 20,
+  "workbench.colorTheme": "Visual Studio Dark - C++",
+  "claudeCode.preferredLocation": "panel",
+  "remote.autoForwardPortsSource": "hybrid",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.sideBar.location": "right",
+  "claudeCode.allowDangerouslySkipPermissions": true,
+  "claudeCode.initialPermissionMode": "bypassPermissions",
+  "files.autoSave": "afterDelay",
+  "files.watcherExclude": {
+    "**/.git/worktrees/**": true,
+    "**/.worktrees/**": true,
+    "**/target/**": true,
+    "**/ros2_interfaces/build/**": true,
+    "**/ros2_interfaces/install/**": true,
+    "**/ros2_interfaces/log/**": true
+  },
+  "search.exclude": {
+    "**/.worktrees/**": true,
+    "**/target/**": true,
+    "**/ros2_interfaces/build/**": true,
+    "**/ros2_interfaces/install/**": true,
+    "**/ros2_interfaces/log/**": true
+  },
+  "git.repositoryScanIgnoredFolders": [
+    "node_modules",
+    ".worktrees",
+    "target",
+    "ros2_interfaces/build",
+    "ros2_interfaces/install",
+    "ros2_interfaces/log"
+  ],
+  "git.detectWorktreesLimit": 16,
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilotcli:",
+  "chatgpt.commentCodeLensEnabled": false,
+  "chat.disableAIFeatures": false,
+  "workbench.editorAssociations": {
+    "*.copilotmd": "vscode.markdown.preview.editor",
+    "*.glb": "default"
+  }
+}

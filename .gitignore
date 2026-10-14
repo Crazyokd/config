@@ -16,3 +16,12 @@
 .codex/state_*.sqlite*
 .codex/goals_*.sqlite*
 .codex/logs_*.sqlite*
+
+# Local credentials, application state, and machine-only overrides.
+local/
+.config/Code/User/globalStorage/
+.config/Code/User/workspaceStorage/
+.config/Code/User/History/
+.config/Code/User/profiles/
+.wox/
+*.bak

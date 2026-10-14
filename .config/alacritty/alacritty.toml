@@ -1,0 +1,64 @@
+#设置改变配置自动启动 [window]的需要重启
+# live_config_reload = true # deprecated
+general.live_config_reload = true
+
+#改变窗口设置
+[window]
+#窗口大小
+dimensions = { columns = 135, lines = 30 }
+padding = { x = 4, y = 2 }
+dynamic_padding = true
+#透明度
+opacity = 0.9
+#窗口名字
+title = "Alacritty"
+
+#字体
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Light" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Medium" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Light Italic" }
+size = 12.0
+
+#颜色主题可以在github上找想要的主题，复制他的配色.
+[colors.primary]
+background = "#1a1b26"
+foreground = "#a9b1d6"
+
+[colors.normal]
+black =   '#212733' #
+red   =  '#f08778' #
+green =  '#53bf97' #
+yellow =  '#fdcc60' #
+blue = '#60b8d6' #
+magenta = '#ec7171' #
+cyan = '#98e6ca' #
+white = '#fafafa' #
+
+[colors.bright]
+black = '#686868'
+red = '#f58c7d'
+green = '#58c49c'
+yellow = '#ffd165'
+blue = '#65bddb'
+magenta = '#f17676'
+cyan = '#9debcf'
+white = '#ffffff'
+
+#光标
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+
+[terminal]
+#设定复制黏贴行为 默认只能复制
+osc52 = "CopyPaste"
+
+[scrolling]
+history = 50000
+multiplier = 5
+
+[mouse]
+hide_when_typing = true
+
+[selection]
+save_to_clipboard = true
