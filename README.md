@@ -32,6 +32,9 @@ The input-method snapshot uses Fcitx 4 and Sogou Pinyin. Follow
 [the input-method restore notes](linux/input-methods.md) before applying it;
 Fcitx 5 requires separate configuration.
 
+The current primary test machine is reached through the private SSH alias `self`.
+See [the Linux test notes](linux/testing.md) for its environment and verified scope.
+
 ### Restore
 
 Install the applications first. Alacritty uses JetBrainsMono Nerd Font;
