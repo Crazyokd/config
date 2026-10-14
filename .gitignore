@@ -25,3 +25,20 @@ local/
 .config/Code/User/profiles/
 .wox/
 *.bak
+
+# Input history, learned dictionaries, and per-session input-method addresses.
+.config/fcitx/clipboard/
+.config/fcitx/dbus/
+.config/fcitx/googlepinyin/
+.config/fcitx/rime/*.userdb/
+.config/fcitx/rime/build/
+.config/fcitx/rime/sync/
+.config/fcitx/rime/installation.yaml
+.config/fcitx/rime/user.yaml
+.config/fcitx/cached_layout
+.config/fcitx5/conf/cached_layouts
+.config/ibus/bus/
+.config/sogoupinyin/dict/*
+!.config/sogoupinyin/dict/shell.conf
+.config/sogoupinyin/conf/pingback.time
+.config/sogoupinyin/conf/stretchrules.json

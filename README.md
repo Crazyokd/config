@@ -17,13 +17,20 @@ The desktop files mirror paths under the user's home directory:
 | `.config/Code/User/extensions.txt` | VS Code extension IDs |
 | `.local/share/applications/` | VS Code file handler and Wox launcher |
 | `.config/autostart/` | Wox startup entry |
+| `.config/fcitx/` | Fcitx 4 shortcuts, input-method profile, and notification preferences |
+| `.config/sogoupinyin/` | Sogou Pinyin preferences, excluding learned dictionaries |
 | `linux/gnome.ini` | Selected GNOME appearance, keyboard, and Dock preferences |
 | `linux/wox.json` | Selected Wox preferences, exported from its settings database |
+| `linux/input-methods.md` | Input-method versions, dependencies, and restore procedure |
 
 The VS Code snapshot excludes Windows terminal profiles, SSH host mappings,
 author identity, and extension environment variables. Keep credentials and
 machine-specific settings outside the shared files. `local/` is ignored by Git;
 applications do not automatically read that directory.
+
+The input-method snapshot uses Fcitx 4 and Sogou Pinyin. Follow
+[the input-method restore notes](linux/input-methods.md) before applying it;
+Fcitx 5 requires separate configuration.
 
 ### Restore
 
